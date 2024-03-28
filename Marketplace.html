@@ -5,26 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advertisements</title>
     <style>
-       
-        .advertisement-card {
+        /* CSS for styling the cards */
+        .card {
             border: 1px solid #ccc;
             border-radius: 5px;
             padding: 10px;
             margin: 10px;
-            width: 300px;
+            width: 200px;
             display: inline-block;
         }
-        .advertisement-card img {
-            max-width: 100%;
-            height: auto;
+        .card img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-    <div id="advertisements-container"></div>
-
+    <div id="advertisements"></div>
+    <input type="text" id="filterInput" placeholder="Filter by title">
     <script>
-        
         const advertisementsData = [
             {
                 title: 'Ad 1',
@@ -38,8 +38,7 @@
                 image: 'https://via.placeholder.com/150',
                 contact: 'contact2@example.com'
             },
-            {
-                title: 'Ad 3',
+            { title: 'Ad 3',
                 description: 'This is the third advertisement.',
                 image: 'https://via.placeholder.com/150',
                 contact: 'contact3@example.com'
@@ -62,42 +61,55 @@
                 image: 'https://via.placeholder.com/150',
                 contact: 'contact6@example.com'
             }
+           
         ];
 
-        // Get the container element where advertisements will be displayed
-        const advertisementsContainer = document.getElementById('advertisements-container');
+        // Function to generate HTML for each advertisement card
+        function generateAdCard(advertisement) {
+            return `
+                <div class="card">
+                    <img src="https://via.placeholder.com/150" alt="${advertisement.title}">
+                    <h2>${advertisement.title}</h2>
+                    <p>${advertisement.description}</p>
+                    <p>Contact: ${advertisement.contact}</p>
+                </div>
+            `;
+        }
 
-        // Loop through each advertisement data and create HTML elements to display them
-        advertisementsData.forEach(advertisement => {
-            // Create a div element for each advertisement
-            const advertisementDiv = document.createElement('div');
-            advertisementDiv.classList.add('advertisement-card');
+        // Function to display advertisements on the webpage
+        function displayAdvertisements() {
+            const advertisementsContainer = document.getElementById('advertisements');
+            advertisementsContainer.innerHTML = '';
+            advertisementsData.forEach(advertisement => {
+                advertisementsContainer.innerHTML += generateAdCard(advertisement);
+            });
+        }
+           // Function to filter advertisements based on title
+           function filterAdvertisementsByTitle(title) {
+            return advertisementsData.filter(advertisement =>
+                advertisement.title.toLowerCase().includes(title.toLowerCase())
+            );
+        }
 
-            // Create an image element
-            const imageElement = document.createElement('img');
-            imageElement.src = advertisement.image;
+        // Function to handle filter input change
+        function handleFilterInput() {
+    const filterInput = document.getElementById('filterInput').value.trim();
+    const filteredAdvertisements = filterAdvertisementsByTitle(filterInput);
+    displayAdvertisements(filteredAdvertisements);
+    
+    
+}
+        
 
-            // Create a heading element for the title
-            const titleElement = document.createElement('h3');
-            titleElement.textContent = advertisement.title;
+        // Attach event listener to filter input
+        document.getElementById('filterInput').addEventListener('input', handleFilterInput);
 
-            // Create a paragraph element for the description
-            const descriptionElement = document.createElement('p');
-            descriptionElement.textContent = advertisement.description;
+        // Initial display of advertisements
+        displayAdvertisements(filteredAdvertisements);
 
-            // Create a paragraph element for the contact information
-            const contactElement = document.createElement('p');
-            contactElement.textContent = 'Contact: ' + advertisement.contact;
-
-            // Append image, title, description, and contact elements to the advertisement div
-            advertisementDiv.appendChild(imageElement);
-            advertisementDiv.appendChild(titleElement);
-            advertisementDiv.appendChild(descriptionElement);
-            advertisementDiv.appendChild(contactElement);
-
-            // Append the advertisement div to the container
-            advertisementsContainer.appendChild(advertisementDiv);
-        });
+        // Call the function to display advertisements when the page loads
+        window.onload = displayAdvertisements;
     </script>
 </body>
 </html>
+
