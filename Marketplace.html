@@ -38,7 +38,8 @@
                 image: 'https://via.placeholder.com/150',
                 contact: 'contact2@example.com'
             },
-            { title: 'Ad 3',
+            {
+                title: 'Ad 3',
                 description: 'This is the third advertisement.',
                 image: 'https://via.placeholder.com/150',
                 contact: 'contact3@example.com'
@@ -61,14 +62,13 @@
                 image: 'https://via.placeholder.com/150',
                 contact: 'contact6@example.com'
             }
-           
         ];
 
         // Function to generate HTML for each advertisement card
         function generateAdCard(advertisement) {
             return `
                 <div class="card">
-                    <img src="https://via.placeholder.com/150" alt="${advertisement.title}">
+                    <img src="${advertisement.image}" alt="${advertisement.title}">
                     <h2>${advertisement.title}</h2>
                     <p>${advertisement.description}</p>
                     <p>Contact: ${advertisement.contact}</p>
@@ -77,15 +77,16 @@
         }
 
         // Function to display advertisements on the webpage
-        function displayAdvertisements() {
+        function displayAdvertisements(advertisements) {
             const advertisementsContainer = document.getElementById('advertisements');
             advertisementsContainer.innerHTML = '';
-            advertisementsData.forEach(advertisement => {
+            advertisements.forEach(advertisement => {
                 advertisementsContainer.innerHTML += generateAdCard(advertisement);
             });
         }
-           // Function to filter advertisements based on title
-           function filterAdvertisementsByTitle(title) {
+
+        // Function to filter advertisements based on title
+        function filterAdvertisementsByTitle(title) {
             return advertisementsData.filter(advertisement =>
                 advertisement.title.toLowerCase().includes(title.toLowerCase())
             );
@@ -93,23 +94,18 @@
 
         // Function to handle filter input change
         function handleFilterInput() {
-    const filterInput = document.getElementById('filterInput').value.trim();
-    const filteredAdvertisements = filterAdvertisementsByTitle(filterInput);
-    displayAdvertisements(filteredAdvertisements);
-    
-    
-}
-        
+            const filterInput = document.getElementById('filterInput').value.trim();
+            const filteredAdvertisements = filterAdvertisementsByTitle(filterInput);
+            displayAdvertisements(filteredAdvertisements);
+        }
 
         // Attach event listener to filter input
         document.getElementById('filterInput').addEventListener('input', handleFilterInput);
 
-        // Initial display of advertisements
-        displayAdvertisements(filteredAdvertisements);
-
-        // Call the function to display advertisements when the page loads
-        window.onload = displayAdvertisements;
+        // Initial display of all advertisements
+        displayAdvertisements(advertisementsData);
     </script>
 </body>
 </html>
+
 
