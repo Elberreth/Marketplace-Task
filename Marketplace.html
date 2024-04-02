@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advertisements</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
         /* CSS for styling the cards */
         .card {
@@ -21,9 +23,21 @@
         }
     </style>
 </head>
-<body>
-    <div id="advertisements"></div>
-    <input type="text" id="filterInput" placeholder="Filter by title">
+<body> <div class="container">
+    <div class="row" id="advertisements"></div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <!-- Filter Input -->
+            <input type="text" class="form-control" id="filterInput" placeholder="Filter by title">
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    
     <script>
         const advertisementsData = [
             {
@@ -72,8 +86,27 @@
                     <h2>${advertisement.title}</h2>
                     <p>${advertisement.description}</p>
                     <p>Contact: ${advertisement.contact}</p>
-                </div>
-            `;
+                    <p class="contact-info" style="display: none;">Contact: ${advertisement.contact}</p>
+            <button onclick="toggleContactInfo(this)">Toggle Contact Info</button>
+            <button onclick="showContactDetails('${advertisement.contact}')">Details</button>
+        </div>
+    `;
+}
+           
+        
+        function toggleContactInfo(button) {
+            const card = button.parentNode;
+            const contactInfo = card.querySelector('.contact-info');
+            if (contactInfo.style.display === 'none') {
+                contactInfo.style.display = 'block';
+                button.textContent = 'Hide Contact Info';
+            } else {
+                contactInfo.style.display = 'none';
+                button.textContent = 'Toggle Contact Info';
+            }
+        }
+        function showContactDetails(contact) {
+            alert(`Contact: ${contact}`);
         }
 
         // Function to display advertisements on the webpage
