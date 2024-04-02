@@ -7,7 +7,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
-        /* CSS for styling the cards */
+       
         .card {
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -27,7 +27,7 @@
     <div class="row" id="advertisements"></div>
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <!-- Filter Input -->
+           
             <input type="text" class="form-control" id="filterInput" placeholder="Filter by title">
         </div>
     </div>
@@ -43,73 +43,76 @@
             {
                 title: 'Ad 1',
                 description: 'This is the first advertisement.',
-                image: 'https://via.placeholder.com/150',
+                image: '150.png',
                 contact: 'contact1@example.com'
             },
             {
                 title: 'Ad 2',
                 description: 'This is the second advertisement.',
-                image: 'https://via.placeholder.com/150',
+                image: '150.png',
                 contact: 'contact2@example.com'
             },
             {
                 title: 'Ad 3',
                 description: 'This is the third advertisement.',
-                image: 'https://via.placeholder.com/150',
+                image: '150.png',
                 contact: 'contact3@example.com'
             },
             {
                 title: 'Ad 4',
                 description: 'This is the fourth advertisement.',
-                image: 'https://via.placeholder.com/150',
+                image: '150.png',
                 contact: 'contact4@example.com'
             },
             {
                 title: 'Ad 5',
                 description: 'This is the fifth advertisement.',
-                image: 'https://via.placeholder.com/150',
+                image: '150.png',
                 contact: 'contact5@example.com'
             },
             {
                 title: 'Ad 6',
                 description: 'This is the sixth advertisement.',
-                image: 'https://via.placeholder.com/150',
+                image: '150.png',
                 contact: 'contact6@example.com'
             }
         ];
 
-        // Function to generate HTML for each advertisement card
+       
         function generateAdCard(advertisement) {
             return `
                 <div class="card">
                     <img src="${advertisement.image}" alt="${advertisement.title}">
                     <h2>${advertisement.title}</h2>
                     <p>${advertisement.description}</p>
-                    <p>Contact: ${advertisement.contact}</p>
-                    <p class="contact-info" style="display: none;">Contact: ${advertisement.contact}</p>
-            <button onclick="toggleContactInfo(this)">Toggle Contact Info</button>
-            <button onclick="showContactDetails('${advertisement.contact}')">Details</button>
-        </div>
+                    <p class="contact-info">Contact: ***</p>
+                    <button class="toggle-btn" onclick="toggleContactInfo(this)">Toggle Contact Info</button>
+                    <button class="details-btn" onclick="showContactDetails('${advertisement.contact}')">Details</button>
+                </div>
     `;
 }
            
         
-        function toggleContactInfo(button) {
-            const card = button.parentNode;
-            const contactInfo = card.querySelector('.contact-info');
-            if (contactInfo.style.display === 'none') {
-                contactInfo.style.display = 'block';
-                button.textContent = 'Hide Contact Info';
-            } else {
-                contactInfo.style.display = 'none';
+function toggleContactInfo(button) {
+    const card = button.parentNode;
+    const contactInfo = card.querySelector('.contact-info');
+    const advertisement = advertisementsData.find(ad => ad.title === card.querySelector('h2').textContent);
+    if (contactInfo.textContent.includes('*')) {
+        
+        contactInfo.textContent = `Contact: ${advertisement.contact}`;
+        button.textContent = 'Hide Contact Info';
+    } else {
+        
+        contactInfo.textContent = 'Contact: ***';
                 button.textContent = 'Toggle Contact Info';
             }
         }
+       
         function showContactDetails(contact) {
             alert(`Contact: ${contact}`);
         }
 
-        // Function to display advertisements on the webpage
+        
         function displayAdvertisements(advertisements) {
             const advertisementsContainer = document.getElementById('advertisements');
             advertisementsContainer.innerHTML = '';
@@ -118,24 +121,24 @@
             });
         }
 
-        // Function to filter advertisements based on title
+        
         function filterAdvertisementsByTitle(title) {
             return advertisementsData.filter(advertisement =>
                 advertisement.title.toLowerCase().includes(title.toLowerCase())
             );
         }
 
-        // Function to handle filter input change
+       
         function handleFilterInput() {
             const filterInput = document.getElementById('filterInput').value.trim();
             const filteredAdvertisements = filterAdvertisementsByTitle(filterInput);
             displayAdvertisements(filteredAdvertisements);
         }
 
-        // Attach event listener to filter input
+       
         document.getElementById('filterInput').addEventListener('input', handleFilterInput);
 
-        // Initial display of all advertisements
+        
         displayAdvertisements(advertisementsData);
     </script>
 </body>
